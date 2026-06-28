@@ -28,9 +28,13 @@ public static void main(String[] args) {
 //        double value = jsonObject.get("value").getAsDouble();
 //        IO.println(name + ": " + value);
         JsonObject data = jsonObject.getAsJsonObject("data");
+        String currency = IO.readln("Please enter currency: ");
+        double aud = data.get(currency).getAsDouble();
 
-        double aud = data.get("AUD").getAsDouble();
-        IO.println(aud);
+        //method to convert from usd to other currencies.
+        String amount = IO.readln("How much USD do you want to convert: ");
+        double dollarAmount = Double.parseDouble(amount);
+        IO.println("Converted amount: " + (dollarAmount / aud));
 
 
     } catch (IOException | InterruptedException e) {
