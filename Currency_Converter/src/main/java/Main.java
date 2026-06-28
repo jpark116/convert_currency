@@ -3,9 +3,9 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
-void main() {
-
+public static void main(String[] args) {
     String apiEndpoint = "https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_cqkQHMOqphKtXGjszlEaaviyh1J3hURt1SSU6PzV";
 
     HttpClient client = HttpClient.newHttpClient();
@@ -23,11 +23,20 @@ void main() {
         String responseBody = response.body();
 
         System.out.println("Status Code: " + statusCode);
-        IO.println("Response Body: " + responseBody);
+        JsonObject jsonObject = new Gson().fromJson(response.body(), JsonObject.class);
+        //        String name = jsonObject.get("name").getAsString();
+//        double value = jsonObject.get("value").getAsDouble();
+//        IO.println(name + ": " + value);
+        JsonObject data = jsonObject.getAsJsonObject("data");
+
+        double aud = data.get("AUD").getAsDouble();
+        IO.println(aud);
+
 
     } catch (IOException | InterruptedException e) {
         e.printStackTrace();
     }
+
 
 
 
